@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "info.mudbourn.mmstweaks.mixin.cr",
+  "compatibilityLevel": "JAVA_25",
+  "plugin": "info.mudbourn.mmstweaks.CrMixinGate",
+  "client": [
+    "CinematicRespawnHoldMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

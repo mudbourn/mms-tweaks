@@ -1,0 +1,138 @@
+{
+  "gameover.bf": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/bf",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.cod": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/cod",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.cvx": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/cvx",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.dmc3": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/dmc3",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.ds3": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/ds3",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.fail": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/fail",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.ff8": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/ff8",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.fnaf": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/fnaf",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.gtav": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/gtav",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.mario": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/mario",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.p5r": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/p5r",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.pico": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/pico",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.re4": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/re4",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.sonic": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/sonic",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.sotb2": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/sotb2",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.undertale": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/undertale",
+        "stream": true
+      }
+    ]
+  },
+  "gameover.zelda": {
+    "sounds": [
+      {
+        "name": "mms_tweaks:gameover/zelda",
+        "stream": true
+      }
+    ]
+  }
+}

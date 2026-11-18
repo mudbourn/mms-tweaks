@@ -1,0 +1,59 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+loom {
+	mods {
+		"mms_tweaks" {
+			sourceSet sourceSets.main
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	compileOnly files("libs/absolutrevive-1.2.2+26.3.jar")
+	compileOnly files("libs/xaerominimap-fabric-26.3-26.6.2.jar")
+	compileOnly files("libs/perspective_api-1.5.0-beta+fabric-26.2.jar")
+
+	localRuntime files("libs/absolutrevive-1.2.2+26.3.jar")
+	localRuntime files("libs/cinematic_respawn-26.3-fabric-1.4.3.jar")
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+	withSourcesJar()
+}
+
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "mms_tweaks_gametest"
+		enableGameTests = false
+		eula = true
+	}
+}

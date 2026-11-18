@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "info.mudbourn.mmstweaks.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "CameraCarryMixin",
+    "DeathScreenAccessor",
+    "GuiSlainScreenMixin",
+    "MusicManagerAccessor",
+    "MusicManagerHoldMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

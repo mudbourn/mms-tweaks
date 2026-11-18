@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "info.mudbourn.mmstweaks.mixin.xaero",
+  "compatibilityLevel": "JAVA_25",
+  "plugin": "info.mudbourn.mmstweaks.XaeroMixinGate",
+  "client": [
+    "DeathpointHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,10 @@
+*.md
+!README.md
+!docs/*.md
+.DS_Store
+.gradle/
+build/
+run/
+logs/
+libs/
+out/

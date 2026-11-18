@@ -1,0 +1,28 @@
+{
+  "required": false,
+  "package": "info.mudbourn.mmstweaks.mixin.ar",
+  "compatibilityLevel": "JAVA_25",
+  "plugin": "info.mudbourn.mmstweaks.ArMixinGate",
+  "mixins": [
+    "AbsolutReviveAggroMixin",
+    "AbsolutReviveBleedoutMixin",
+    "AbsolutReviveDropMixin",
+    "AbsolutReviveHandGuardMixin",
+    "AbsolutReviveLootGateMixin",
+    "AbsolutReviveNotifyMixin",
+    "AbsolutReviveRescueTimeMixin",
+    "AbsolutReviveTotemMixin"
+  ],
+  "client": [
+    "AbsolutReviveBodyFadeMixin",
+    "AbsolutReviveCameraMixin",
+    "AbsolutReviveDeathPoseMixin",
+    "AbsolutReviveHandHideMixin",
+    "AbsolutReviveOverlayFadeMixin",
+    "AbsolutReviveRescueTimeClientMixin",
+    "AbsolutReviveStatusLayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

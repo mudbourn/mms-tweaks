@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "mms_tweaks",
+  "version": "${version}",
+  "name": "MMS Tweaks",
+  "description": "Downing, reviving and game over flow for MMSLive, tying AbsolutRevive, You Were Slain and Cinematic Respawn together.",
+  "authors": [
+    "mudbourn"
+  ],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "info.mudbourn.mmstweaks.MmsTweaks"
+    ],
+    "client": [
+      "info.mudbourn.mmstweaks.client.MmsTweaksClient"
+    ]
+  },
+  "mixins": [
+    "mms_tweaks.mixins.json",
+    "mms_tweaks.ar.mixins.json",
+    "mms_tweaks.cr.mixins.json",
+    "mms_tweaks.xaero.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "absolutrevive": "*",
+    "cinematic_respawn": "*",
+    "youwereslain": "*",
+    "thirdpersondeath": "*",
+    "leawind_third_person": "*",
+    "perspective_api": "*",
+    "trinkets": "*",
+    "xaerominimap": "*"
+  }
+}
