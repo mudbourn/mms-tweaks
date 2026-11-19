@@ -1,0 +1,7 @@
+{
+  "required": false,
+  "package": "info.mudbourn.mmstweaks.mixin.silencer",
+  "compatibilityLevel": "JAVA_25",
+  "plugin": "info.mudbourn.mmstweaks.log.SilencerBoot",
+  "mixins": []
+}

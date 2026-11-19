@@ -10,6 +10,9 @@
   "license": "All-Rights-Reserved",
   "environment": "*",
   "entrypoints": {
+    "preLaunch": [
+      "info.mudbourn.mmstweaks.log.SilencerBoot"
+    ],
     "main": [
       "info.mudbourn.mmstweaks.MmsTweaks"
     ],
@@ -18,6 +21,7 @@
     ]
   },
   "mixins": [
+    "mms_tweaks.silencer.mixins.json",
     "mms_tweaks.mixins.json",
     "mms_tweaks.ar.mixins.json",
     "mms_tweaks.cr.mixins.json",

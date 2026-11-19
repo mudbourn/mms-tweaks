@@ -1,0 +1,89 @@
+# MMS log silencer rules. One Java regex per line, matched anywhere in a log message.
+# Matching lines (with their stack traces) leave latest.log and go to logs/junk/<launch time>.log.
+# The junk file ends with a count per rule. Delete this file to get the current defaults back.
+# Uproot dead hooks marked harmless or covered are silenced on their own, without a rule here.
+
+# --- shader linking chatter ---
+Info log when linking program containing
+Output of vertex shader '.*' not read by fragment shader
+
+# --- textures and models ---
+Missing texture references in model aerialhell:
+Unused frames in sprite
+dropping miplevel from \d+ to \d+
+with size \d+x\d+ limits mip level
+Non-directory entry .*resourcepacks/
+
+# --- worldgen ---
+Trying to mark a block for post processing @ .*but this operation is not supported
+
+# --- mixin bootstrap ---
+Reference map '.*' for .* could not be read
+Redundant @Unique on injector method
+
+# --- update checks and platform probes ---
+io exception while checking \w+: Online mod data expired
+\[Iris Update Check\]
+\[SteamDeckUtil\]
+Unable to parse version .* to a codename
+
+# --- network and data noise ---
+Received packet for unknown scoreboard objective
+Unknown custom packet payload
+Missing translation key for rename:
+Could not deserialize restriction type use because
+
+# --- routine info spam ---
+Resizing Dynamic Transforms UBO
+Resized a dynamic immediate buffer
+Aux slot \d+ created
+^No migration necessary\.?$
+^Changing watch distance to \d+$
+
+# --- known, harmless load-time noise (added 2026-11-19) ---
+^Reference map '.*' for .* could not be read
+^Error loading class: .* \(java\.lang\.ClassNotFoundException
+^Method overwrite conflict for 
+^@ModifyConstant conflict\. Skipping 
+^Discarding @Unique public field 
+^Mixin .* has multiple constructors
+^Option 'mixin\..*' overriden \(by mods
+^Mod '.*' attempted to override option 'mixin\.
+^Force-disabling mixin 
+^Force disabled MC-\d+ because
+^SeedGen: leaving out 
+^Cannot find native library .*c2me
+^Error loading companion plugin class \[dev\.isxander\.controlify
+^Could not initialize Chromium Embedded Framework
+# ranged_weapon_api Pillager mixin targets its own missing method; the mod still loads
+PillagerEntityMixin
+# resource-pack content gaps in third-party mods
+^Missing textures in model 
+^Missing texture references in model 
+^Missing model for variant: 'Block\{biomeswevegone:legacy_shelf_fungi
+^Missing block model: minecraft:item/hadheld
+^Invalid frame index on sprite 
+^File .* does not exist, cannot add it to event 
+^Adding .* as an alias for .*, but the latter doesn't exist
+^Found loot table element validation problem .*Unreachable entry
+^Found cycle while sorting resource reloaders
+^Found okay program match for 
+^Found unknown config field 
+# startup chatter
+^Partially Incompatible Distant Horizons mod detected
+^Level stem minecraft:the_end has the biome source 
+^Using Cloth Config GUI
+^Raise Sound Limits Simplified was detected
+^`tryCondenseDupes
+^Requested post effect does not exist: minecraft:end_of_frame
+^World leak fix for skyboxify is off
+^\[SDLNativesLoader\] SDL3 NATIVE LIBRARY VERSION MISMATCH
+^The configured (primary party|permission) system 
+^Skipping Entity with id \[invalid\]
+^Timed out waiting for world statistics
+^(Initial datapack load took|Game took .* seconds to start|Total time to load game|Time from main menu to in-game)
+# Uproot dead hooks not yet tagged in dead-hooks.txt; still listed in the junk file
+^Dead hook: .*(FarmBlockMixin\.knot\$onFarmlandTrample|BowAttackGoalMixin|PlayerEntityRendererMixin\.armPose_crossbowHold_RWA|MultiNoiseBiomeSourceRouteMixin|NewYggdrasilUserApiServiceMixin|FileToIdConverterMixin|LanguageReaderMixin|WeatherEffectRendererMixin|EnvironmentAttributeSystemMixin|ParticleGroupMixin|LevelExtractorMixin\.replaceBlockEntityIteration|ItemInHandRendererMixin\.KielsonsAPI)
+# known failures, kept out of latest.log (see junk for the stack)
+^\[worldgen-init\] bootstrap failed
+^TerraBlender is installed but its surface rule API could not be reached

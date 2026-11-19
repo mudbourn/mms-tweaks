@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -27,7 +28,7 @@ public final class SelfReviveHold {
     public static final KeyMapping KEY = new KeyMapping(
         "key.mms_tweaks.self_revive",
         InputConstants.KEY_R,
-        KeyMapping.Category.register(MmsTweaks.id("mms_tweaks"))
+        mmsCategory()
     );
 
     private static boolean lootable;
@@ -128,5 +129,14 @@ public final class SelfReviveHold {
         holdTicks = 0;
         lastHoldTicks = 0;
         sent = false;
+    }
+    // The shared MMS controls category. Every mms mod registers it, and the first one wins.
+    private static KeyMapping.Category mmsCategory() {
+        Identifier id = Identifier.fromNamespaceAndPath("mms", "main");
+        try {
+            return KeyMapping.Category.register(id);
+        } catch (IllegalArgumentException alreadyRegistered) {
+            return new KeyMapping.Category(id);
+        }
     }
 }
