@@ -6,8 +6,11 @@
   "mixins": [
     "AbsolutReviveAggroMixin",
     "AbsolutReviveBleedoutMixin",
+    "AbsolutReviveCauseMixin",
+    "AbsolutReviveDeathCauseMixin",
     "AbsolutReviveDropMixin",
     "AbsolutReviveHandGuardMixin",
+    "AbsolutReviveHitMixin",
     "AbsolutReviveLootGateMixin",
     "AbsolutReviveNotifyMixin",
     "AbsolutReviveRescueTimeMixin",

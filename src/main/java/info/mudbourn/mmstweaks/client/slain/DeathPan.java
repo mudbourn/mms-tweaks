@@ -5,6 +5,7 @@ import info.mudbourn.mmstweaks.client.revive.View;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -50,11 +51,31 @@ public final class DeathPan {
 
     static void rise(Minecraft minecraft) {
         active = true;
-        height = minecraft.options.getEffectiveRenderDistance() * 16.0 + MARGIN;
+        int reach = minecraft.options.getEffectiveRenderDistance() * 16;
+        height = reach + MARGIN + terrainAbove(minecraft, reach);
         riseStart = Util.getMillis();
         descentStart = -1L;
         lastYawFrame = -1L;
         lastPitchFrame = -1L;
+    }
+
+    // How far the highest loaded ground within render distance stands above the player, so slopes stay out of view.
+    private static double terrainAbove(Minecraft minecraft, int reach) {
+        LocalPlayer player = minecraft.player;
+        if (player == null || minecraft.level == null) {
+            return 0.0;
+        }
+        int px = player.getBlockX();
+        int pz = player.getBlockZ();
+        int top = Integer.MIN_VALUE;
+        for (int dx = -reach; dx <= reach; dx += 8) {
+            for (int dz = -reach; dz <= reach; dz += 8) {
+                if (dx * dx + dz * dz <= reach * reach) {
+                    top = Math.max(top, minecraft.level.getHeight(Heightmap.Types.MOTION_BLOCKING, px + dx, pz + dz));
+                }
+            }
+        }
+        return Math.max(0.0, top - player.getY());
     }
 
     static void descend() {

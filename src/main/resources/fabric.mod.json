@@ -9,6 +9,9 @@
   ],
   "license": "All-Rights-Reserved",
   "environment": "*",
+  "languageAdapters": {
+    "mms_tweaks_silencer": "info.mudbourn.mmstweaks.log.SilencerLanguageAdapter"
+  },
   "entrypoints": {
     "preLaunch": [
       "info.mudbourn.mmstweaks.log.SilencerBoot"

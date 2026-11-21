@@ -87,3 +87,7 @@ PillagerEntityMixin
 # known failures, kept out of latest.log (see junk for the stack)
 ^\[worldgen-init\] bootstrap failed
 ^TerraBlender is installed but its surface rule API could not be reached
+^Found (fine|okay|\*decent\*|.*) program match for 
+^Changing Distant Horizons' rendering engine to 
+^Distant Horizons: G1 Garbage collector detected
+^Device \[.*\] supports all extensions from FeatureSet
