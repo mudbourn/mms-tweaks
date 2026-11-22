@@ -91,3 +91,5 @@ PillagerEntityMixin
 ^Changing Distant Horizons' rendering engine to 
 ^Distant Horizons: G1 Garbage collector detected
 ^Device \[.*\] supports all extensions from FeatureSet
+# Mob Battle's Wither ally check: Mob AI Tweaks replaces Wither hurtServer and already drops that check
+^Mixin (WitherMixin \(mobbattle\.mixins\.json\) apply to|apply for mod mobbattle failed mobbattle\.mixins\.json:WitherMixin )
