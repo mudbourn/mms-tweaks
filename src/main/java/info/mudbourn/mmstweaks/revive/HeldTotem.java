@@ -1,7 +1,6 @@
 package info.mudbourn.mmstweaks.revive;
 
 import java.lang.reflect.Method;
-import java.util.Optional;
 import java.util.function.Predicate;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.component.DataComponents;
@@ -31,12 +30,11 @@ public final class HeldTotem {
 
     private static boolean inTrinkets(Player player) {
         try {
-            Optional<?> component = (Optional<?>) GET_COMPONENT.invoke(null, player);
-            if (component.isEmpty()) {
+            Object trinkets = GET_COMPONENT.invoke(null, player);
+            if (trinkets == null) {
                 return false;
             }
-            Object trinkets = component.get();
-            Method isEquipped = trinkets.getClass().getMethod("isEquipped", Predicate.class);
+            Method isEquipped = Class.forName("eu.pb4.trinkets.api.TrinketAttachment").getMethod("isEquipped", Predicate.class);
             Predicate<ItemStack> test = HeldTotem::protects;
             return (Boolean) isEquipped.invoke(trinkets, test);
         } catch (ReflectiveOperationException | ClassCastException e) {
@@ -49,7 +47,8 @@ public final class HeldTotem {
             return null;
         }
         try {
-            return Class.forName("dev.emi.trinkets.api.TrinketsApi").getMethod("getTrinketComponent", LivingEntity.class);
+            // Trinkets Updated (provides "trinkets"); the old dev.emi API is not present on 26.3.
+            return Class.forName("eu.pb4.trinkets.api.TrinketsApi").getMethod("getAttachment", LivingEntity.class);
         } catch (ReflectiveOperationException e) {
             return null;
         }
