@@ -23,6 +23,9 @@ public class MmsTweaks implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(
+            server -> info.mudbourn.mmstweaks.log.LogSilencer.summary("World ready")
+        );
         PayloadTypeRegistry.serverboundPlay().register(SelfReviveRequest.TYPE, SelfReviveRequest.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(DownedStatus.TYPE, DownedStatus.CODEC);
         SelfRevives.register();

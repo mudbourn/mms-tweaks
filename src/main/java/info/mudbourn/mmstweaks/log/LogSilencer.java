@@ -30,8 +30,10 @@ import org.apache.logging.log4j.core.filter.AbstractFilter;
 /**
  * Moves known noise out of latest.log and into logs/junk/. The rules are regexes in
  * config/mms_tweaks/log-silencer.txt (written from the bundled default on first run).
- * A rule matches anywhere in the formatted message. When Uproot is loaded, its dead hooks
- * marked harmless or covered in uproot/dead-hooks.txt are silenced too.
+ * A rule matches anywhere in the formatted message. A rule written as info:&lt;regex&gt; only silences
+ * INFO, DEBUG and TRACE lines, so broad rules for startup chatter never hide a warning or error.
+ * When Uproot is loaded, its dead hooks marked harmless or covered in uproot/dead-hooks.txt are
+ * silenced too. {@link #summary(String)} writes a one-line count of what was moved into latest.log.
  */
 public final class LogSilencer extends AbstractFilter {
 
@@ -41,10 +43,18 @@ public final class LogSilencer extends AbstractFilter {
 
     private static volatile boolean installed;
 
-    private record Rule(String source, Pattern pattern, AtomicLong hits) {}
+    private static final String INFO_ONLY = "info:";
+    private static final int SUMMARY_TOP = 5;
+
+    private static volatile LogSilencer instance;
+
+    private record Rule(String source, Pattern pattern, boolean infoOnly, AtomicLong hits) {}
 
     private final List<Rule> rules;
     private final Pattern any;
+    private final Pattern anyAtAnyLevel;
+    private final Path junkPath;
+    private final AtomicLong total = new AtomicLong();
     private final List<String[]> deadHooks;
     private final AtomicLong deadHookHits = new AtomicLong();
     private final BufferedWriter junk;
@@ -54,12 +64,20 @@ public final class LogSilencer extends AbstractFilter {
         this.rules = rules;
         this.deadHooks = deadHooks;
         this.junk = junk;
+        this.junkPath = junkPath;
+        this.any = combine(rules, false);
+        this.anyAtAnyLevel = combine(rules, true);
+    }
+
+    // One alternation over the rules, or only over the rules that apply at every level.
+    private static Pattern combine(List<Rule> rules, boolean everyLevelOnly) {
         StringBuilder all = new StringBuilder();
         for (Rule r : rules) {
+            if (everyLevelOnly && r.infoOnly) continue;
             if (!all.isEmpty()) all.append('|');
             all.append("(?:").append(r.pattern.pattern()).append(')');
         }
-        this.any = all.isEmpty() ? null : Pattern.compile(all.toString());
+        return all.isEmpty() ? null : Pattern.compile(all.toString());
     }
 
     /** Installs the filter once. Safe to call from several entrypoints. Never throws. */
@@ -79,6 +97,7 @@ public final class LogSilencer extends AbstractFilter {
 
             LogSilencer filter = new LogSilencer(rules, deadHooks, junkPath, out);
             filter.start();
+            instance = filter;
 
             LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
             Configuration config = ctx.getConfiguration();
@@ -106,14 +125,15 @@ public final class LogSilencer extends AbstractFilter {
             return Result.NEUTRAL;
         }
         if (msg == null) return Result.NEUTRAL;
-        if (matches(msg)) {
+        if (matches(msg, event.getLevel().isLessSpecificThan(org.apache.logging.log4j.Level.INFO))) {
+            total.incrementAndGet();
             write(event, msg);
             return Result.DENY;
         }
         return Result.NEUTRAL;
     }
 
-    private boolean matches(String msg) {
+    private boolean matches(String msg, boolean routine) {
         if (msg.startsWith("Dead hook: ")) {
             for (String[] hook : deadHooks) {
                 if (msg.contains(hook[0]) && ("*".equals(hook[1]) || msg.contains(hook[0] + "." + hook[1] + " "))) {
@@ -122,14 +142,41 @@ public final class LogSilencer extends AbstractFilter {
                 }
             }
         }
-        if (any == null || !any.matcher(msg).find()) return false;
+        Pattern candidates = routine ? any : anyAtAnyLevel;
+        if (candidates == null || !candidates.matcher(msg).find()) return false;
         for (Rule r : rules) {
-            if (r.pattern.matcher(msg).find()) {
+            if ((routine || !r.infoOnly) && r.pattern.matcher(msg).find()) {
                 r.hits.incrementAndGet();
                 break;
             }
         }
         return true;
+    }
+
+    /**
+     * Logs how many lines have been moved to the junk file so far and which rules caught the most,
+     * so latest.log says what was left out. Does nothing when the silencer is off.
+     */
+    public static void summary(String when) {
+        LogSilencer filter = instance;
+        if (filter == null) return;
+        List<Rule> sorted = new ArrayList<>(filter.rules);
+        sorted.sort(Comparator.comparingLong((Rule r) -> r.hits.get()).reversed());
+        StringBuilder top = new StringBuilder();
+        for (Rule r : sorted.subList(0, Math.min(SUMMARY_TOP, sorted.size()))) {
+            if (r.hits.get() == 0) break;
+            if (!top.isEmpty()) top.append(", ");
+            top.append(r.hits.get()).append("x ").append(r.source);
+        }
+        if (filter.deadHookHits.get() > 0) {
+            if (!top.isEmpty()) top.append(", ");
+            top.append(filter.deadHookHits.get()).append("x Uproot dead hooks");
+        }
+        Path gameDir = FabricLoader.getInstance().getGameDir();
+        LogManager.getLogger("MMS Log Silencer").info(
+            "{}: {} routine lines moved to {} (most: {})",
+            when, filter.total.get(), gameDir.relativize(filter.junkPath), top.isEmpty() ? "none" : top
+        );
     }
 
     private synchronized void write(LogEvent event, String msg) {
@@ -179,8 +226,10 @@ public final class LogSilencer extends AbstractFilter {
         for (String raw : Files.readAllLines(file, StandardCharsets.UTF_8)) {
             String line = raw.strip();
             if (line.isEmpty() || line.startsWith("#")) continue;
+            boolean infoOnly = line.startsWith(INFO_ONLY);
+            String regex = infoOnly ? line.substring(INFO_ONLY.length()) : line;
             try {
-                rules.add(new Rule(line, Pattern.compile(line), new AtomicLong()));
+                rules.add(new Rule(line, Pattern.compile(regex), infoOnly, new AtomicLong()));
             } catch (Exception e) {
                 LogManager.getLogger("MMS Log Silencer").warn("Skipping bad silencer rule: {} ({})", line, e.getMessage());
             }

@@ -11,6 +11,9 @@ public class MmsTweaksClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents.CLIENT_STARTED.register(
+            client -> info.mudbourn.mmstweaks.log.LogSilencer.summary("Game started")
+        );
         FabricLoader loader = FabricLoader.getInstance();
         SlainFlow.register();
         JingleCommand.register();

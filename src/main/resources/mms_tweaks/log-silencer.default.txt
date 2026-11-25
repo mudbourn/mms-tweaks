@@ -1,4 +1,5 @@
 # MMS log silencer rules. One Java regex per line, matched anywhere in a log message.
+# Prefix a rule with info: to silence only INFO, DEBUG and TRACE lines, never warnings or errors.
 # Matching lines (with their stack traces) leave latest.log and go to logs/junk/<launch time>.log.
 # The junk file ends with a count per rule. Delete this file to get the current defaults back.
 # Uproot dead hooks marked harmless or covered are silenced on their own, without a rule here.
@@ -93,3 +94,39 @@ PillagerEntityMixin
 ^Device \[.*\] supports all extensions from FeatureSet
 # Mob Battle's Wither ally check: Mob AI Tweaks replaces Wither hurtServer and already drops that check
 ^Mixin (WitherMixin \(mobbattle\.mixins\.json\) apply to|apply for mod mobbattle failed mobbattle\.mixins\.json:WitherMixin )
+
+# --- routine startup chatter (info only, added 2026-11-25) ---
+# Rules starting with info: only silence INFO, DEBUG and TRACE lines, never warnings or errors.
+info:^\[WTHIT\] (Initializing (common|client) plugin|Plugin config reloaded)
+info:^Will add .+ to
+info:^Registered region .+ to index
+info:^Registered animation file with id
+info:^Loading Xaero
+info:^Deserializing .+ from '
+info:^Loading config from
+info:^Instancing error handler class
+info:: \d+ classes indexed, 0 mixin issues found before launch$
+info:^(Registering|Registered|Initializing|Initialized|Initialising|Initialised|Loading|Loaded|Finished loading|Done loading|Successfully loaded|Creating and Registering)\b
+info:(?i)\b(is|has been|successfully|finished) (loaded|initiali[sz]ed|registered)\b
+info:(?i)\b(done|finished) (loading|initiali[sz]ing|registering)\b
+info:^Hello Fabric world!$
+info:^No Optifine!$
+info:^EFX (ready|Extension recognized)$
+info:^Max auxiliary sends
+info:^Detected \d+ available physical CPUs
+info:^Size changed to
+info:^Furnish workbench recipes built so far
+info:^Building tag cache\.$
+info:^Reading\.\.\.$
+info:^Trying to read layer file
+info:^Preparing spawn area: \d+%$
+info:^[a-z0-9_]+: (true|false|-?\d+(\.\d+)?)$
+info:^[ A-Z|_/\\()=-]{6,}$
+# Periodic performance telemetry; [client-lag] lines that flag a problem stay in latest.log.
+info:^\[(mspt|light|server-tick-phase|worldtick|entity-tick|movement-internals|monster-phase|target-scan|goal-selector|move-control|look-control|physics-dispatch|cramming-dispatch|block-tick|fluid-tick|entity-query|entity-query-cache|collider-skip|nav-[a-z]+|entity-render|prechunk|chunkgen-features)\]
+info:^\[client-lag\] .*\[OK\]
+info:^(Started \d+|Stopping) worker threads$
+info:^\[DimensionLeakFix\]
+info:^\[BetterClouds\] No tasks
+info:^Bobby light store:
+info:^Minimap updated server level id
