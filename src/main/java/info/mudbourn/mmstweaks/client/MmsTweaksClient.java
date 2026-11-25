@@ -14,6 +14,7 @@ public class MmsTweaksClient implements ClientModInitializer {
         FabricLoader loader = FabricLoader.getInstance();
         SlainFlow.register();
         JingleCommand.register();
+        WaterDebug.register();
         if (loader.isModLoaded("absolutrevive")) {
             SelfReviveHold.register();
         }

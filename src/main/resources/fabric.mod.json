@@ -28,7 +28,8 @@
     "mms_tweaks.mixins.json",
     "mms_tweaks.ar.mixins.json",
     "mms_tweaks.cr.mixins.json",
-    "mms_tweaks.xaero.mixins.json"
+    "mms_tweaks.xaero.mixins.json",
+    "mms_tweaks.chatpatches.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.20.1",
@@ -44,6 +45,7 @@
     "leawind_third_person": "*",
     "perspective_api": "*",
     "trinkets": "*",
-    "xaerominimap": "*"
+    "xaerominimap": "*",
+    "chatpatches": "*"
   }
 }

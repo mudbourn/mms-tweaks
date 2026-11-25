@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "info.mudbourn.mmstweaks.mixin.chatpatches",
+  "compatibilityLevel": "JAVA_25",
+  "plugin": "info.mudbourn.mmstweaks.ChatPatchesMixinGate",
+  "client": [
+    "ChatLogSaveMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
