@@ -45,6 +45,7 @@
     "leawind_third_person": "*",
     "perspective_api": "*",
     "trinkets": "*",
+    "cosmeticarmor": "*",
     "xaerominimap": "*",
     "chatpatches": "*"
   }

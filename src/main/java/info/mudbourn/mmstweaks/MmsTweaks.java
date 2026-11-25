@@ -1,5 +1,6 @@
 package info.mudbourn.mmstweaks;
 
+import info.mudbourn.mmstweaks.command.MmsCommands;
 import info.mudbourn.mmstweaks.loops.DatapackLoops;
 import info.mudbourn.mmstweaks.net.DownedStatus;
 import info.mudbourn.mmstweaks.net.SelfReviveRequest;
@@ -28,6 +29,7 @@ public class MmsTweaks implements ModInitializer {
         NightsSurvived.register();
         DatapackLoops.register();
         info.mudbourn.mmstweaks.command.TestingCommands.register();
+        MmsCommands.register();
         if (FabricLoader.getInstance().isModLoaded("absolutrevive")) {
             ServerPlayNetworking.registerGlobalReceiver(
                 SelfReviveRequest.TYPE,

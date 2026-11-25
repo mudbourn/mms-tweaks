@@ -28,6 +28,25 @@ run through `mms-uproot`.
 8. While downed, the camera orbits the player in third person and eases back
    into their own view if they get up.
 
+## Commands
+
+Each command has a minimum tier: player, temp mod, moderator, admin or owner.
+A player's tier is the higher of their op level and their Discord role, read
+through the bot token and guild in `config/mms_tweaks/commands.json` and the
+Discord Integration link file. Players with no link, or a Discord that cannot
+be reached, fall back to the last cached tier, then to player.
+
+- Player: `/home`, `/home set`, `/enderchest` (`/ec`, `/echest`), `/workbench`,
+  `/stonecutter`, `/grindstone`, `/trash`, `/afk`, `/rules`, `/suicide`,
+  `/gametime`, `/deathpos`, `/hat`.
+- Temp mod: `/invsee`, `/near`, `/top`, `/deathpos <player>`, `/coords <player>`,
+  `/lastpos <player>`.
+- Moderator: `/fly`, `/flyspeed`, `/god`, `/heal`, `/feed`, `/repair`,
+  `/extinguish`, `/rtp`, `/nick`, `/day`, `/night`, `/gm`, `/dimension`,
+  `/enderchest <player>`, `/home <player>`, `/deathpos tp`, `/smelt`,
+  `/disenchant`, `/rename`, `/killitems`.
+- Admin: `/rules reload`, `/mmstier`.
+
 ## Build
 
 ```bash

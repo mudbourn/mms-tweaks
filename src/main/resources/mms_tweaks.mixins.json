@@ -5,6 +5,9 @@
   "mixins": [
     "loops.DatapackLoopBlockMixin",
     "loops.StonecutterDamageMixin",
+    "PlayerDisplayNameMixin",
+    "ServerPlayerGameModeMixin",
+    "ServerPlayerTabMixin",
     "water.EntityCurrentMixin",
     "water.SwimSpeedMixin"
   ],
