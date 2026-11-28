@@ -28,6 +28,17 @@ dependencies {
 
 	localRuntime files("libs/absolutrevive-1.2.2+26.3.jar")
 	localRuntime files("libs/cinematic_respawn-26.3-fabric-1.4.3.jar")
+
+	// Absolut Revive (the mudbourn absolutrevive-26.3 build) ships inside this jar: downing and reviving are a staple of
+	// mms-tweaks, so the pack carries no separate Absolut Revive.
+	// Loom only nests module dependencies, so libs/ doubles as a flat repository for it.
+	include ":absolutrevive:1.2.2+26.3"
+}
+
+repositories {
+	flatDir {
+		dirs "libs"
+	}
 }
 
 processResources {
